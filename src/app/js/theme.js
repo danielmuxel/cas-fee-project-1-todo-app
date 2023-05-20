@@ -3,8 +3,6 @@ const initializeThemeToggle = () => {
   const body = document.querySelector("body");
 
   toggleTheme.addEventListener("click", () => {
-
-    console.log("Theme toggle clicked");
     body.classList.toggle("dark");
   });
 };
