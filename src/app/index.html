@@ -2,36 +2,61 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Todo App Daniel Muxel</title>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Todo App Daniel Muxel</title>
 
-  <link rel="stylesheet" href="./css/style.css">
+	<link rel="stylesheet" href="./css/style.css">
 
-  <script src="./js/app.js" type="module" defer></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"
+		integrity="sha512-RNLkV3d+aLtfcpEyFG8jRbnWHxUqVZozacROI4J2F1sTaDqo1dPQYs01OMi1t1w9Y2FdbSCDSQ2ZVdAC8bzgAg=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="./js/app.js" type="module" defer></script>
 
 </head>
 
 <body>
-  <main>
+	<main>
 
-    <div>
-      <button id="theme-toggle" class="btn">Toggle Theme</button>
-    </div>
+		<div>
+			<button id="theme-toggle" class="btn">Toggle Theme</button>
+		</div>
 
-    <div class="container">
-      <h1>Todo - App</h1>
-    </div>
+		<div class="container">
+			<h1>Todo - App</h1>
+		</div>
 
-    <div class="container">
-      <ul>
-        <li></li>
-      </ul>
-    </div>
+		<div class="container">
+			<ul id="todo-list">
+				<script id="todo-template" type="text/x-handlebars-template">
+						{{#each todos}}
+							<li class="todo {{#if finished}}finished{{else}}pending{{/if}}">
+								<input type="checkbox" class="toggle" {{#if finished}}checked{{/if}}>
+
+								<div>
+									<h2>{{title}}</h2>
+									<p>
+										{{description}}
+									</p>
+								</div>
+
+								<ul class="flex items-center">
+									<li class="mr-1">
+										<button data-todo-id="{{id}}" class="edit btn btn-edit">Edit</button>
+									</li>
+									<li>
+										<button data-todo-id="{{id}}" class="delete btn btn-delete">Delete</button>
+									</li>
+								</ul>
+							</li>
+						{{/each}}
+					</script>
+			</ul>
+		</div>
 
 
-  </main>
+	</main>
 </body>
 
 </html>

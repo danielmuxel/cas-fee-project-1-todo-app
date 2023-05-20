@@ -1,15 +1,15 @@
 @font-face {
-  font-family: 'Poppins';
+  font-family: Poppins;
   font-style: normal;
   font-weight: 400;
-  src: url('../fonts/Poppins-Regular.ttf') format('truetype');
+  src: url("../fonts/Poppins-Regular.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: 'Poppins';
+  font-family: Poppins;
   font-style: normal;
   font-weight: 700;
-  src: url('../fonts/Poppins-Bold.ttf') format('truetype');
+  src: url("../fonts/Poppins-Bold.ttf") format("truetype");
 }
 
 /* css variables */
@@ -17,15 +17,21 @@
 :root {
   --primary: #4338ca;
   --primary-hover: #4f46e5;
-
   --text: #030712;
-  --background: #e5e7eb;
+  --background: #fff;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  color: var(--text);
+  background-color: var(--background);
+  transition: background-color 0.2s ease-in-out;
 }
 
 body.dark {
   --primary: #6366f1;
   --primary-hover: #818cf8;
-
   --text: #e5e7eb;
   --background: #111827;
 }
@@ -35,15 +41,7 @@ body.dark {
 }
 
 html {
-  font-family: 'Poppins', sans-serif;
-}
-
-body {
-  margin: 0;
-  padding: 0;
-  color: var(--text);
-  background-color: var(--background);
-  transition: background-color 0.2s ease-in-out;
+  font-family: Poppins, sans-serif;
 }
 
 a {
@@ -61,6 +59,16 @@ button {
   border: none;
   background-color: transparent;
   cursor: pointer;
+}
+
+h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+p {
+  margin: 0;
 }
 
 /* components */
@@ -85,4 +93,39 @@ button {
   background-color: var(--primary-hover);
 }
 
+.todo {
+  display: grid;
+  grid-template-columns: 1fr 3fr auto auto;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border-bottom: 1px solid var(--text);
+}
 
+/* the first .todo should have the top border */
+.todo:first-child {
+  border-top: 1px solid var(--text);
+}
+
+.finished {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+
+/* utility classes */
+
+.flex {
+  display: flex;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.mr-1 {
+  margin-right: 1rem;
+}
