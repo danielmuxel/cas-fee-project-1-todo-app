@@ -74,7 +74,7 @@ const getTodos = () =>
     }, delay);
   });
 
-const addTodo = (todo) =>
+const createTodo = (todo) =>
   new Promise((resolve) => {
     setTimeout(() => {
       todos.push(todo);
@@ -100,4 +100,4 @@ const updateTodo = (id, todo) =>
     }, delay);
   });
 
-export { getTodos, addTodo, deleteTodo, updateTodo };
+export { getTodos, createTodo, deleteTodo, updateTodo };
