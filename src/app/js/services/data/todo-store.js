@@ -80,7 +80,7 @@ export default {
 
   add(todo) {
     const todos = this.get();
-    todos.push(todo);
+    todos.push({ ...todo, id: todos.length + 1});
     this.set(todos);
   },
 
