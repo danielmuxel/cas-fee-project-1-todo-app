@@ -13,7 +13,31 @@
 		integrity="sha512-RNLkV3d+aLtfcpEyFG8jRbnWHxUqVZozacROI4J2F1sTaDqo1dPQYs01OMi1t1w9Y2FdbSCDSQ2ZVdAC8bzgAg=="
 		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<script src="./js/app.js" type="module" defer></script>
+	<script id="todo-template" type="text/x-handlebars-template">
+		<ul id="todo-list">
+			{{#each todos}}
+				<li class="todo {{#if finished}}finished{{else}}pending{{/if}}">
+					<input data-todo-id="{{id}}" data-todo-action="toggle-finish" type="checkbox" class="toggle" {{#if finished}}checked{{/if}}>
 
+					<div>
+						<h2>{{title}}</h2>
+						<p>
+							{{description}}
+						</p>
+					</div>
+
+					<ul class="flex items-center">
+						<li class="mr-1">
+							<button data-todo-id="{{id}}" data-todo-action="edit" class="edit btn btn-edit">Edit</button>
+						</li>
+						<li>
+							<button data-todo-id="{{id}}" data-todo-action="delete" class="btn btn-delete">Delete</button>
+						</li>
+					</ul>
+				</li>
+			{{/each}}
+		</ul>
+	</script>
 </head>
 
 <body>
@@ -23,37 +47,56 @@
 			<button id="theme-toggle" class="btn">Toggle Theme</button>
 		</div>
 
+		<div class="my-4">
+			<button id="reset-store" class="btn">Clear Store</button>
+		</div>
+
 		<div class="container">
 			<h1>Todo - App</h1>
 		</div>
 
-		<div class="container">
-			<ul id="todo-list">
-				<script id="todo-template" type="text/x-handlebars-template">
-						{{#each todos}}
-							<li class="todo {{#if finished}}finished{{else}}pending{{/if}}">
-								<input type="checkbox" class="toggle" {{#if finished}}checked{{/if}}>
-
-								<div>
-									<h2>{{title}}</h2>
-									<p>
-										{{description}}
-									</p>
-								</div>
-
-								<ul class="flex items-center">
-									<li class="mr-1">
-										<button data-todo-id="{{id}}" class="edit btn btn-edit">Edit</button>
-									</li>
-									<li>
-										<button data-todo-id="{{id}}" class="delete btn btn-delete">Delete</button>
-									</li>
-								</ul>
-							</li>
-						{{/each}}
-					</script>
-			</ul>
+		<div class="my-4">
+			<button id="new-todo" class="btn">New Todo</button>
 		</div>
+
+		<!-- inside the todo-container the todos are getting rendered by the todo-template -->
+		<section class="todo-container">
+		</section>
+
+		<!-- the dialog is used to create and edit the todos -->
+		<dialog id="todo-dialog">
+			<form id="todo-form" method="dialog">
+				<h2 id="dialog-heading">Create/Edit Todo</h2>
+
+				<div class="hidden">
+					<label for="id">ID:</label>
+					<input id="id" name="id" type="number" hidden readonly>
+				</div>
+
+				<div class="flex flex-col my-4">
+					<label for="title">Title:</label>
+					<input id="title" name="title" type="text" required>
+				</div>
+				<div class="flex flex-col my-4">
+					<label for="description">Description:</label>
+					<textarea id="description" name="description"></textarea>
+				</div>
+				<div class="flex flex-col my-4">
+					<label for="dueDate">Due Date:</label>
+					<input id="dueDate" name="dueDate" type="date">
+				</div>
+				<div class="flex flex-col my-4">
+					<label for="importance">Importance (1-5):</label>
+					<input id="importance" name="importance" type="number" min="1" max="5">
+				</div>
+				<div class="flex my-4">
+					<input id="finished" name="finished" type="checkbox">
+					<label for="finished">Finished</label>
+				</div>
+				<button class="btn" id="save-todo" type="submit">Save</button>
+				<button id="close-dialog" type="button">Close</button>
+			</form>
+		</dialog>
 
 
 	</main>

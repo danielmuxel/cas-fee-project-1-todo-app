@@ -71,6 +71,25 @@ p {
   margin: 0;
 }
 
+dialog {
+  border-radius: 0.5rem;
+  border: none;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  max-width: 100%;
+  width: 32rem
+}
+
+input,
+textarea {
+  border: 1px solid var(--text);
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  font-family: inherit;
+  outline: none;
+  transition: box-shadow 0.2s ease-in-out;
+}
+
 /* components */
 
 .container {
@@ -118,6 +137,10 @@ p {
   display: flex;
 }
 
+.flex-col {
+  flex-direction: column;
+}
+
 .items-center {
   align-items: center;
 }
@@ -128,4 +151,13 @@ p {
 
 .mr-1 {
   margin-right: 1rem;
+}
+
+.my-4 {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.hidden {
+  display: none;
 }

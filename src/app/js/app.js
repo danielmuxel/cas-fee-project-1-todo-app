@@ -1,5 +1,5 @@
 import initializeThemeToggle from "./theme.js";
-import initializeTodoList from "./todo.js";
+import initializeTodoController from "./controllers/todo-controller.js";
 
 initializeThemeToggle();
-initializeTodoList();
+initializeTodoController();

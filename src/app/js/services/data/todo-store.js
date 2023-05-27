@@ -1,4 +1,6 @@
-const todos = [
+const localStorageKey = "todos-store";
+
+const mockData = [
   {
     id: 1,
     title: "Learn JavaScript",
@@ -65,39 +67,48 @@ const todos = [
   },
 ];
 
-const delay = 50;
+export default {
+  get() {
+    return JSON.parse(
+      localStorage.getItem(localStorageKey) || JSON.stringify(mockData)
+    );
+  },
 
-const getTodos = () =>
-  new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(todos);
-    }, delay);
-  });
+  set(todos) {
+    localStorage.setItem(localStorageKey, JSON.stringify(todos));
+  },
 
-const createTodo = (todo) =>
-  new Promise((resolve) => {
-    setTimeout(() => {
-      todos.push(todo);
-      resolve(todos);
-    }, delay);
-  });
+  add(todo) {
+    const todos = this.get();
+    todos.push(todo);
+    this.set(todos);
+  },
 
-const deleteTodo = (id) =>
-  new Promise((resolve) => {
-    setTimeout(() => {
-      const index = todos.findIndex((todo) => todo.id === id);
-      todos.splice(index, 1);
-      resolve(todos);
-    }, delay);
-  });
+  update(todo) {
+    const todos = this.get();
+    const index = todos.findIndex((t) => Number(t.id) === Number(todo.id));
 
-const updateTodo = (id, todo) =>
-  new Promise((resolve) => {
-    setTimeout(() => {
-      const index = todos.findIndex((t) => t.id === id);
+    if (index !== -1) {
       todos[index] = todo;
-      resolve(todos);
-    }, delay);
-  });
+      this.set(todos);
+    } else {
+      console.error(`Todo with ID ${todo.id} not found`);
+    }
+  },
 
-export { getTodos, createTodo, deleteTodo, updateTodo };
+  delete(id) {
+    const todos = this.get();
+    const index = todos.findIndex((t) => Number(t.id) === Number(id));
+    if (index !== -1) {
+      todos.splice(index, 1);
+      this.set(todos);
+    } else {
+      console.error(`Todo with ID ${id} not found`);
+    }
+  },
+
+  // reset store with the key
+  resetStore() {
+    localStorage.removeItem(localStorageKey);
+  },
+};
