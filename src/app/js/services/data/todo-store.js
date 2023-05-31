@@ -80,7 +80,7 @@ export default {
 
   add(todo) {
     const todos = this.get();
-    todos.push({ ...todo, id: todos.length + 1});
+    todos.unshift({ ...todo, id: todos.length + 1});
     this.set(todos);
   },
 
@@ -92,7 +92,7 @@ export default {
       todos[index] = todo;
       this.set(todos);
     } else {
-      console.error(`Todo with ID ${todo.id} not found`);
+      console.error(`Todo with ID ${todo.id} not found`); // add toast notification maybe?
     }
   },
 
@@ -103,7 +103,7 @@ export default {
       todos.splice(index, 1);
       this.set(todos);
     } else {
-      console.error(`Todo with ID ${id} not found`);
+      console.error(`Todo with ID ${id} not found`); // add toast notification maybe?
     }
   },
 

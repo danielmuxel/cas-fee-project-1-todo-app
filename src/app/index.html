@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 
 <head>
 	<meta charset="UTF-8">
@@ -12,7 +12,9 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"
 		integrity="sha512-RNLkV3d+aLtfcpEyFG8jRbnWHxUqVZozacROI4J2F1sTaDqo1dPQYs01OMi1t1w9Y2FdbSCDSQ2ZVdAC8bzgAg=="
 		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-	<script src="./js/app.js" type="module" defer></script>
+
+	<script src="./js/app.js" type="module"></script>
+
 	<script id="todo-template" type="text/x-handlebars-template">
 		<ul id="todo-list">
 			{{#each todos}}
@@ -21,6 +23,9 @@
 
 					<div>
 						<h2>{{title}}</h2>
+						<p>
+							{{formatDate dueDate}}
+						</p>
 						<p>
 							{{description}}
 						</p>
@@ -56,7 +61,7 @@
 		</div>
 
 		<div class="my-4">
-			<button id="new-todo" class="btn">New Todo</button>
+			<button id="new-todo-button" class="btn">New Todo</button>
 		</div>
 
 		<!-- inside the todo-container the todos are getting rendered by the todo-template -->

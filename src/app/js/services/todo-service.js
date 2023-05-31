@@ -16,18 +16,23 @@ const getTodo = (id) =>
     }, delay);
   });
 
-const addTodo = (todo) =>
+// combine add or update and check if the id is set, if not add, if yes update
+const addOrUpdateTodo = (todo) =>
   new Promise((resolve) => {
     setTimeout(() => {
-      todoStore.add(todo);
+      if (todo.id) {
+        todoStore.update(todo);
+      } else {
+        todoStore.add(todo);
+      }
       resolve(todoStore.get());
     }, delay);
   });
 
-const deleteTodo = (id) =>
+const addTodo = (todo) =>
   new Promise((resolve) => {
     setTimeout(() => {
-      todoStore.delete(id);
+      todoStore.add(todo);
       resolve(todoStore.get());
     }, delay);
   });
@@ -40,4 +45,12 @@ const updateTodo = (id, todo) =>
     }, delay);
   });
 
-export { getTodos, getTodo, addTodo, deleteTodo, updateTodo };
+const deleteTodo = (id) =>
+  new Promise((resolve) => {
+    setTimeout(() => {
+      todoStore.delete(id);
+      resolve(todoStore.get());
+    }, delay);
+  });
+
+export { getTodos, getTodo, addTodo, updateTodo, addOrUpdateTodo, deleteTodo };

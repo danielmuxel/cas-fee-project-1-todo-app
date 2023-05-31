@@ -1,4 +1,3 @@
-/* global Handlebars */ // so eslint doesn't complain about it being undefined
 import {
   getTodos,
   getTodo,
@@ -6,28 +5,38 @@ import {
   addTodo,
   updateTodo,
 } from "../services/todo-service.js";
-import todoStore from "../services/data/todo-store.js";
+import todoStore from "../services/data/todo-store.js"; // only used to reset the store for debugging
 
 const todoContainerElement = document.querySelector(".todo-container");
 const todoTemplateElement = document.querySelector("#todo-template");
 const resetStoreElement = document.querySelector("#reset-store");
+  // Fetch the template from the DOM
+  const todoTemplateSource = todoTemplateElement.innerHTML;
+  // Compile the template
+  const todoCompiledTemplate = Handlebars.compile(todoTemplateSource);
 
-const newTodoElement = document.querySelector("#new-todo");
+const newTodoButtonElement = document.querySelector("#new-todo-button");
 const todoDialogElement = document.querySelector("#todo-dialog");
 const todoFormElement = document.querySelector("#todo-form");
-const todoDialogCloseElement = document.querySelector("#todo-dialog #close-dialog");
+const todoDialogCloseElement = document.querySelector(
+  "#todo-dialog #close-dialog"
+);
+
+// add a helper to handlebars to format the date
+Handlebars.registerHelper("formatDate", (date) => {
+  // format the date to be human readable (e.g. 2021-06-07 to 07.06.2021)
+  const dateObject = new Date(date);
+  const day = dateObject.getDate().toString().padStart(2, "0");
+  const month = (dateObject.getMonth() + 1).toString().padStart(2, "0");
+  const year = dateObject.getFullYear();
+  return `${day}.${month}.${year}`;
+});
 
 async function renderTodos() {
   const todos = await getTodos();
 
-  // Fetch the template from the DOM
-  const source = todoTemplateElement.innerHTML;
-
-  // Compile the template
-  const template = Handlebars.compile(source);
-
   // Generate the HTML
-  const html = template({ todos });
+  const html = todoCompiledTemplate({ todos });
 
   // Add the HTML to the DOM
   todoContainerElement.innerHTML = html;
@@ -56,8 +65,6 @@ const attachEventListeners = () => {
 
     // if the action is edit
     if (event.target.dataset.todoAction === "edit") {
-      console.log("edit");
-
       // get the id from the data-todo-id attribute
       const id = event.target.dataset.todoId;
 
@@ -71,7 +78,6 @@ const attachEventListeners = () => {
       todoFormElement.elements.dueDate.value = todo.dueDate;
       todoFormElement.elements.importance.value = todo.importance;
       todoFormElement.elements.finished.checked = todo.finished;
-
 
       // Open the dialog
       todoDialogElement.showModal();
@@ -106,12 +112,12 @@ const attachEventListeners = () => {
   });
 
   // create the event listener for the new todo button
-  newTodoElement.addEventListener("click", () => {
-    // Open the dialog
-    todoDialogElement.showModal();
-
+  newTodoButtonElement.addEventListener("click", () => {
     // Clear the form
     todoFormElement.reset();
+
+    // Open the dialog
+    todoDialogElement.showModal();
   });
 
   // create the event listener for the todo form submit
@@ -121,17 +127,17 @@ const attachEventListeners = () => {
     const formData = new FormData(event.target);
     const todo = Object.fromEntries(formData.entries());
 
-    // convert the id back to a number
-    todo.id = Number(todo.id);
-
     if (todo.finished === "on") {
       todo.finished = true;
     } else {
       todo.finished = false;
     }
 
-    // add or update todo
+    // add or update todo - can be moved to a service function addOrUpdateTodo
     if (todo.id) {
+      // convert the id back to a number
+      todo.id = Number(todo.id);
+
       await updateTodo(todo);
     } else {
       await addTodo(todo);
