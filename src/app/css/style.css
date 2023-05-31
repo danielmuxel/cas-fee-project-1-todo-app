@@ -23,7 +23,7 @@
 
 body {
   margin: 0;
-  padding: 0;
+  padding: 1rem;
   color: var(--text);
   background-color: var(--background);
   transition: background-color 0.2s ease-in-out;
@@ -114,7 +114,7 @@ textarea {
 
 .todo {
   display: grid;
-  grid-template-columns: 1fr 3fr auto auto;
+  grid-template-columns: auto 3fr auto auto;
   align-items: center;
   gap: 1rem;
   padding: 1rem;
