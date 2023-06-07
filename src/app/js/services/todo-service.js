@@ -2,10 +2,23 @@ import todoStore from "./data/todo-store.js";
 
 const delay = 50;
 
-const getTodos = () =>
+const getTodos = ({ sortKey, order }) =>
   new Promise((resolve) => {
     setTimeout(() => {
-      resolve(todoStore.get());
+      if (sortKey) {
+        resolve(() => {
+          if (order === "desc") {
+            return todoStore
+              .get()
+              .sort((a, b) => (a[sortKey] < b[sortKey] ? 1 : -1));
+          }
+          return todoStore
+            .get()
+            .sort((a, b) => (a[sortKey] > b[sortKey] ? 1 : -1));
+        });
+      } else {
+        resolve(todoStore.get());
+      }
     }, delay);
   });
 
