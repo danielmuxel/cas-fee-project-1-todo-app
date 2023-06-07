@@ -2,18 +2,19 @@ import {
   getTodos,
   getTodo,
   deleteTodo,
-  addTodo,
-  updateTodo,
+  addOrUpdateTodo,
 } from "../services/todo-service.js";
 import todoStore from "../services/data/todo-store.js"; // only used to reset the store for debugging
 
 const todoContainerElement = document.querySelector(".todo-container");
 const todoTemplateElement = document.querySelector("#todo-template");
 const resetStoreElement = document.querySelector("#reset-store");
-  // Fetch the template from the DOM
-  const todoTemplateSource = todoTemplateElement.innerHTML;
-  // Compile the template
-  const todoCompiledTemplate = Handlebars.compile(todoTemplateSource);
+// Fetch the template from the DOM
+const todoTemplateSource = todoTemplateElement.innerHTML;
+// Compile the template
+const todoCompiledTemplate = Handlebars.compile(todoTemplateSource);
+
+const sortActionsListElement = document.querySelector("#sort-actions-list");
 
 const newTodoButtonElement = document.querySelector("#new-todo-button");
 const todoDialogElement = document.querySelector("#todo-dialog");
@@ -21,6 +22,11 @@ const todoFormElement = document.querySelector("#todo-form");
 const todoDialogCloseElement = document.querySelector(
   "#todo-dialog #close-dialog"
 );
+
+const sort = {
+  key: "dueDate",
+  order: "asc",
+}
 
 // add a helper to handlebars to format the date
 Handlebars.registerHelper("formatDate", (date) => {
@@ -33,7 +39,7 @@ Handlebars.registerHelper("formatDate", (date) => {
 });
 
 async function renderTodos() {
-  const todos = await getTodos();
+  const todos = await getTodos(sort);
 
   // Generate the HTML
   const html = todoCompiledTemplate({ todos });
@@ -95,7 +101,7 @@ const attachEventListeners = () => {
       todo.finished = !todo.finished;
 
       // update the todo item
-      await updateTodo(todo);
+      await addOrUpdateTodo(todo);
 
       // re-render the todo list
       await renderTodos();
@@ -133,15 +139,8 @@ const attachEventListeners = () => {
       todo.finished = false;
     }
 
-    // add or update todo - can be moved to a service function addOrUpdateTodo
-    if (todo.id) {
-      // convert the id back to a number
-      todo.id = Number(todo.id);
-
-      await updateTodo(todo);
-    } else {
-      await addTodo(todo);
-    }
+    // add or update todo
+    await addOrUpdateTodo(todo);
 
     // Close the dialog
     todoDialogElement.close();
@@ -154,6 +153,20 @@ const attachEventListeners = () => {
   todoDialogCloseElement.addEventListener("click", () => {
     // Close the dialog
     todoDialogElement.close();
+  });
+
+  sortActionsListElement.addEventListener("click", async (event) => {
+    // if the clicked element is not a sort action then return early
+    // sort actions have data-sort-key
+    if (!event.target.dataset.sortKey) {
+      return;
+    }
+
+    // get the sort key from the data-sort-key attribute
+   sort.key = event.target.dataset.sortKey;
+
+    // re-render the todo list
+    await renderTodos(sort);
   });
 };
 
