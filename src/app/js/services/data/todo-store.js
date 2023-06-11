@@ -85,11 +85,12 @@ export default {
   },
 
   update(todo) {
+    const newTodo = { ...todo, id: Number(todo.id) };
     const todos = this.get();
     const index = todos.findIndex((t) => Number(t.id) === Number(todo.id));
 
     if (index !== -1) {
-      todos[index] = todo;
+      todos[index] = newTodo;
       this.set(todos);
     } else {
       console.error(`Todo with ID ${todo.id} not found`); // add toast notification maybe?
