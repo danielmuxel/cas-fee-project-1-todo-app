@@ -5,7 +5,7 @@
   "main": "public/scripts/main.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node test.js",
     "stylelint": "stylelint \"**/*.css\"",
     "w3c": "html-validator --file ./src/app/index.html  --verbose",
     "eslint": "eslint \"**/*.js\"",
@@ -28,6 +28,7 @@
     "stylelint-config-standard": "^25.0.0"
   },
   "dependencies": {
+    "axios": "^1.4.0",
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "handlebars": "^4.7.7",
