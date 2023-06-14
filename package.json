@@ -10,7 +10,7 @@
     "w3c": "html-validator --file ./src/app/index.html  --verbose",
     "eslint": "eslint \"**/*.js\"",
     "all": "npm run stylelint && npm run w3c  && npm run eslint  && node -e \"console.log('npm run all completed')\"",
-    "api": "node index.js",
+    "api": "node ./src/api/index.js",
     "app": "http-server -p 8080 -o ./src/app/index.html"
   },
   "author": "Michael Gfeller",
@@ -28,8 +28,10 @@
     "stylelint-config-standard": "^25.0.0"
   },
   "dependencies": {
-    "express": "^4.18.0",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
     "handlebars": "^4.7.7",
-    "http-server": "^14.1.1"
+    "http-server": "^14.1.1",
+    "nedb": "^1.8.0"
   }
 }

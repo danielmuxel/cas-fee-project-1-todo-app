@@ -9,12 +9,10 @@ import todoStore from "../services/data/todo-store.js"; // only used to reset th
 const todoContainerElement = document.querySelector(".todo-container");
 const todoTemplateElement = document.querySelector("#todo-template");
 const resetStoreElement = document.querySelector("#reset-store");
-// Fetch the template from the DOM
+// Get the template from the DOM
 const todoTemplateSource = todoTemplateElement.innerHTML;
 // Compile the template
 const todoCompiledTemplate = Handlebars.compile(todoTemplateSource);
-
-const sortActionsListElement = document.querySelector("#sort-actions-list");
 
 const newTodoButtonElement = document.querySelector("#new-todo-button");
 const todoDialogElement = document.querySelector("#todo-dialog");
@@ -23,10 +21,12 @@ const todoDialogCloseElement = document.querySelector(
   "#todo-dialog #close-dialog"
 );
 
+const todoSortActionsElement = document.querySelector("#todo-sort-actions");
+
 const sort = {
   key: "dueDate",
   order: "asc",
-}
+};
 
 // add a helper to handlebars to format the date
 Handlebars.registerHelper("formatDate", (date) => {
@@ -128,7 +128,7 @@ const attachEventListeners = () => {
 
   // create the event listener for the todo form submit
   todoFormElement.addEventListener("submit", async (event) => {
-    event.preventDefault();
+    event.preventDefault(); // prevent the default form submit behavior, so it doesn't reload the page
 
     const formData = new FormData(event.target);
     const todo = Object.fromEntries(formData.entries());
@@ -155,15 +155,17 @@ const attachEventListeners = () => {
     todoDialogElement.close();
   });
 
-  sortActionsListElement.addEventListener("click", async (event) => {
+  todoSortActionsElement.addEventListener("click", async (event) => {
     // if the clicked element is not a sort action then return early
-    // sort actions have data-sort-key
+    // sort actions have data-sort-order
     if (!event.target.dataset.sortKey) {
       return;
     }
 
-    // get the sort key from the data-sort-key attribute
-   sort.key = event.target.dataset.sortKey;
+    console.log("do something");
+
+    // get the sort order from the data-sort-order attribute
+    sort.order = event.target.dataset.sortOrder;
 
     // re-render the todo list
     await renderTodos(sort);
