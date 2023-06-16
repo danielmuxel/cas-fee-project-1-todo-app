@@ -2,8 +2,24 @@
 import * as TodoService from "../services/todoService.js";
 
 export const getAllTodos = (req, res) => {
-  const query = req.query || {};
-  TodoService.getAllTodos(query, (err, todos) => {
+  console.log("req.query", req.query);
+
+  // if a query has s_ in front of it, it is a sort query
+  // if a query has f_ in front of it, it is a filter query
+  const sort = {};
+  const filter = {};
+
+  Object.keys(req.query).forEach((key) => {
+    if (key.startsWith("s_")) {
+      const sortKey = key.substring(2);
+      sort[sortKey] = req.query[key];
+    } else if (key.startsWith("f_")) {
+      const filterKey = key.substring(2);
+      filter[filterKey] = req.query[key];
+    }
+  });
+
+  TodoService.getAllTodos(filter, sort, (err, todos) => {
     if (err) res.status(500).send(err);
     else res.json(todos);
   });

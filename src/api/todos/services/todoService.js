@@ -3,8 +3,11 @@ import Datastore from "nedb";
 
 const db = new Datastore({ filename: "./db/todos.db", autoload: true });
 
-export const getAllTodos = (query, callback) => {
-  db.find(query, callback);
+export const getAllTodos = (filter, sort, callback) => {
+  console.log("filter", filter);
+  console.log("sort", sort);
+  
+  db.find(filter, callback).sort(sort);
 };
 
 export const getTodoById = (id, callback) => {

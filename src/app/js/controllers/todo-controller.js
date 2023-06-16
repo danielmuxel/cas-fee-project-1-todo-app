@@ -23,11 +23,6 @@ const todoDialogCloseElement = document.querySelector(
 
 const todoSortActionsElement = document.querySelector("#todo-sort-actions");
 
-const sort = {
-  key: "dueDate",
-  order: "asc",
-};
-
 // add a helper to handlebars to format the date
 Handlebars.registerHelper("formatDate", (date) => {
   // format the date to be human readable (e.g. 2021-06-07 to 07.06.2021)
@@ -39,7 +34,7 @@ Handlebars.registerHelper("formatDate", (date) => {
 });
 
 async function renderTodos() {
-  const todos = await getTodos(sort);
+  const todos = await getTodos({}, { dueDate: 1 });
 
   // Generate the HTML
   const html = todoCompiledTemplate({ todos });
