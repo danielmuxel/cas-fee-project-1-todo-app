@@ -3,12 +3,12 @@ import {
   getTodo,
   deleteTodo,
   addOrUpdateTodo,
+  addMockData,
 } from "../services/todo-service.js";
-import todoStore from "../services/data/todo-store.js"; // only used to reset the store for debugging
 
 const todoContainerElement = document.querySelector(".todo-container");
 const todoTemplateElement = document.querySelector("#todo-template");
-const resetStoreElement = document.querySelector("#reset-store");
+const addMockDataElement = document.querySelector("#add-mock-data");
 // Get the template from the DOM
 const todoTemplateSource = todoTemplateElement.innerHTML;
 // Compile the template
@@ -22,6 +22,9 @@ const todoDialogCloseElement = document.querySelector(
 );
 
 const todoSortActionsElement = document.querySelector("#todo-sort-actions");
+let sort = {};
+const todoFilterActionsElement = document.querySelector("#todo-filter-actions");
+let filter = {};
 
 // add a helper to handlebars to format the date
 Handlebars.registerHelper("formatDate", (date) => {
@@ -34,7 +37,8 @@ Handlebars.registerHelper("formatDate", (date) => {
 });
 
 async function renderTodos() {
-  const todos = await getTodos({}, { dueDate: 1 });
+  console.log(filter, sort);
+  const todos = await getTodos(filter, sort);
 
   // Generate the HTML
   const html = todoCompiledTemplate({ todos });
@@ -103,10 +107,9 @@ const attachEventListeners = () => {
     }
   });
 
-  // create the event listener for the reset store button
-  resetStoreElement.addEventListener("click", async () => {
-    // reset the local storage
-    todoStore.resetStore();
+  addMockDataElement.addEventListener("click", async () => {
+    // add mock data to the local storage
+    await addMockData();
 
     // re-render the todo list
     await renderTodos();
@@ -157,15 +160,57 @@ const attachEventListeners = () => {
       return;
     }
 
-    console.log("do something");
+    // get the sort key from the data-sort-key attribute
+    const key = event.target.dataset.sortKey;
 
-    // get the sort order from the data-sort-order attribute
-    sort.order = event.target.dataset.sortOrder;
+    // if the sort key is the same as the previous one, then toggle the order
+    if (sort[key] !== undefined) {
+      sort[key] *= -1;
+    } else {
+      // reset the sort object
+      sort = {};
+      // set the sort key to 1
+      sort[key] = 1;
+    }
 
     // re-render the todo list
-    await renderTodos(sort);
+    await renderTodos();
   });
 };
+
+todoFilterActionsElement.addEventListener("click", async (event) => {
+  // if the clicked element is not a filter action then return early
+  // filter actions have data-filter-key
+  if (!event.target.dataset.filterKey) {
+    return;
+  }
+
+  // get the filter key from the data-filter-key attribute
+  const key = event.target.dataset.filterKey;
+
+  // reset the filter object
+  filter = {};
+
+  // if the filter is all, then return early (no need to set the filter object) and re-render the todo list
+  if (key === "all") {
+    // re-render the todo list
+    await renderTodos();
+    return;
+  }
+
+  // if the filter is finished, then set the filter object to { finished: true }
+  if (key === "finished") {
+    filter.finished = true;
+  }
+
+  // if the filter is pending, then set the filter object to { finished: false }
+  if (key === "pending") {
+    filter.finished = false;
+  }
+
+  // re-render the todo list
+  await renderTodos();
+});
 
 async function initializeTodoController() {
   // render the todo list

@@ -31,4 +31,4 @@ const initializeThemeToggle = () => {
   });
 };
 
-export default initializeThemeToggle;
+initializeThemeToggle();

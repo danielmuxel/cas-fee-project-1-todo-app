@@ -13,6 +13,7 @@
 		integrity="sha512-RNLkV3d+aLtfcpEyFG8jRbnWHxUqVZozacROI4J2F1sTaDqo1dPQYs01OMi1t1w9Y2FdbSCDSQ2ZVdAC8bzgAg=="
 		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+	<script src="./js/theme.js" type="module"></script>
 	<script src="./js/app.js" type="module"></script>
 
 	<script id="todo-template" type="text/x-handlebars-template">
@@ -28,6 +29,9 @@
 						</p>
 						<p>
 							{{description}}
+						</p>
+						<p>
+							{{importance}}
 						</p>
 					</div>
 
@@ -53,7 +57,7 @@
 		</div>
 
 		<div class="my-4">
-			<button id="reset-store" class="btn">Clear Store</button>
+			<button id="add-mock-data" class="btn">Add Mock Data</button>
 		</div>
 
 		<div class="container">
@@ -65,7 +69,7 @@
 		</div>
 
 		<!-- inside the todo-container the todos are getting rendered by the todo-template -->
-		<ul id="todo-sort-actions" class="flex my-4">
+		<ul id="todo-sort-actions" class="flex flex-wrap my-4 space-x-2">
 			<li>
 				<button data-sort-key="title" class="btn">Sort by Title</button>
 			</li>
@@ -79,6 +83,19 @@
 				<button data-sort-key="finished" class="btn">Sort by Finished</button>
 			</li>
 		</ul>
+
+		<ul id="todo-filter-actions" class="flex flex-wrap my-4 space-x-2">
+			<li>
+				<button data-filter-key="all" class="btn">Show All</button>
+			</li>
+			<li>
+				<button data-filter-key="finished" class="btn">Show Finished</button>
+			</li>
+			<li>
+				<button data-filter-key="pending" class="btn">Show Pending</button>
+			</li>
+		</ul>
+
 		<section class="todo-container">
 		</section>
 

@@ -9,13 +9,22 @@ export const getAllTodos = (req, res) => {
   const sort = {};
   const filter = {};
 
+  // the query has s_dueDate=1 now we need to remove the s_ and add it to the sort object like this: sort = { dueDate: 1 }
+
   Object.keys(req.query).forEach((key) => {
     if (key.startsWith("s_")) {
       const sortKey = key.substring(2);
-      sort[sortKey] = req.query[key];
+      sort[sortKey] = Number(req.query[key]);
     } else if (key.startsWith("f_")) {
       const filterKey = key.substring(2);
-      filter[filterKey] = req.query[key];
+      // parse req.query[key] to boolean if it is a boolean
+      let filterValue = req.query[key];
+      console.log("filterValue", filterValue);
+
+      if (filterValue === "true") filterValue = true;
+      else if (filterValue === "false") filterValue = false;
+
+      filter[filterKey] = filterValue;
     }
   });
 

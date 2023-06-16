@@ -68,6 +68,8 @@ const mockData = [
 ];
 
 export default {
+  mockData,
+
   get() {
     return JSON.parse(
       localStorage.getItem(localStorageKey) || JSON.stringify(mockData)
