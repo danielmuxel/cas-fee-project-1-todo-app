@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 // eslint-disable-next-line import/no-extraneous-dependencies, import/no-import-module-exports
 import Datastore from "nedb";
 
@@ -12,17 +13,33 @@ export const getAllTodos = (filter, sort, callback) => {
 };
 
 export const getTodoById = (id, callback) => {
-  db.findOne({ _id: id }, callback);
+  try {
+    db.findOne({ _id: id }, callback);
+  } catch (error) {
+    console.log("error", error.message);
+  }
 };
 
 export const addTodo = (todo, callback) => {
-  db.insert(todo, callback);
+  try {
+    db.insert(todo, callback);
+  } catch (error) {
+    console.log("error", error.message);
+  }
 };
 
 export const updateTodo = (id, todo, options, callback) => {
-  db.update({ _id: id }, todo, options, callback);
+  try {
+    db.update({ _id: id }, todo, options, callback);
+  } catch (error) {
+    console.log("error", error.message);
+  }
 };
 
 export const deleteTodo = (id, callback) => {
-  db.remove({ _id: id }, {}, callback);
+  try {
+    db.remove({ _id: id }, {}, callback);
+  } catch (error) {
+    console.log("error", error.message);
+  }
 };

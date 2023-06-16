@@ -2,8 +2,6 @@
 import * as TodoService from "../services/todoService.js";
 
 export const getAllTodos = (req, res) => {
-  console.log("req.query", req.query);
-
   // if a query has s_ in front of it, it is a sort query
   // if a query has f_ in front of it, it is a filter query
   const sort = {};
@@ -19,7 +17,6 @@ export const getAllTodos = (req, res) => {
       const filterKey = key.substring(2);
       // parse req.query[key] to boolean if it is a boolean
       let filterValue = req.query[key];
-      console.log("filterValue", filterValue);
 
       if (filterValue === "true") filterValue = true;
       else if (filterValue === "false") filterValue = false;

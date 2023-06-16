@@ -3,12 +3,10 @@ import {
   getTodo,
   deleteTodo,
   addOrUpdateTodo,
-  addMockData,
 } from "../services/todo-service.js";
 
 const todoContainerElement = document.querySelector(".todo-container");
 const todoTemplateElement = document.querySelector("#todo-template");
-const addMockDataElement = document.querySelector("#add-mock-data");
 // Get the template from the DOM
 const todoTemplateSource = todoTemplateElement.innerHTML;
 // Compile the template
@@ -22,7 +20,10 @@ const todoDialogCloseElement = document.querySelector(
 );
 
 const todoSortActionsElement = document.querySelector("#todo-sort-actions");
-let sort = {};
+let sort = {
+  dueDate: 1,
+};
+
 const todoFilterActionsElement = document.querySelector("#todo-filter-actions");
 let filter = {};
 
@@ -37,7 +38,6 @@ Handlebars.registerHelper("formatDate", (date) => {
 });
 
 async function renderTodos() {
-  console.log(filter, sort);
   const todos = await getTodos(filter, sort);
 
   // Generate the HTML
@@ -77,10 +77,14 @@ const attachEventListeners = () => {
       const todo = await getTodo(id);
 
       // Fill the form with the todo data
-      todoFormElement.elements.id.value = todo.id;
+      todoFormElement.elements.id.value = id;
       todoFormElement.elements.title.value = todo.title;
       todoFormElement.elements.description.value = todo.description;
-      todoFormElement.elements.dueDate.value = todo.dueDate;
+      // get the date from the todo item and convert it to a date object and format it like the input expects it (e.g. 2021-06-07)
+      todoFormElement.elements.dueDate.value = new Date(todo.dueDate)
+        .toISOString()
+        .split("T")[0]
+        .toString();
       todoFormElement.elements.importance.value = todo.importance;
       todoFormElement.elements.finished.checked = todo.finished;
 
@@ -107,14 +111,6 @@ const attachEventListeners = () => {
     }
   });
 
-  addMockDataElement.addEventListener("click", async () => {
-    // add mock data to the local storage
-    await addMockData();
-
-    // re-render the todo list
-    await renderTodos();
-  });
-
   // create the event listener for the new todo button
   newTodoButtonElement.addEventListener("click", () => {
     // Clear the form
@@ -126,10 +122,18 @@ const attachEventListeners = () => {
 
   // create the event listener for the todo form submit
   todoFormElement.addEventListener("submit", async (event) => {
+
     event.preventDefault(); // prevent the default form submit behavior, so it doesn't reload the page
 
     const formData = new FormData(event.target);
     const todo = Object.fromEntries(formData.entries());
+
+    // transform the .id prop to _id
+    if (todo.id) {
+      // eslint-disable-next-line no-underscore-dangle
+      todo._id = todo.id;
+      delete todo.id;
+    }
 
     if (todo.finished === "on") {
       todo.finished = true;

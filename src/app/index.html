@@ -20,7 +20,7 @@
 		<ul id="todo-list">
 			{{#each todos}}
 				<li class="todo {{#if finished}}finished{{else}}pending{{/if}}">
-					<input data-todo-id="{{id}}" data-todo-action="toggle-finish" type="checkbox" class="toggle" {{#if finished}}checked{{/if}}>
+					<input data-todo-id="{{_id}}" data-todo-action="toggle-finish" type="checkbox" class="toggle" {{#if finished}}checked{{/if}}>
 
 					<div>
 						<h2>{{title}}</h2>
@@ -37,10 +37,10 @@
 
 					<ul class="flex items-center">
 						<li class="mr-1">
-							<button data-todo-id="{{id}}" data-todo-action="edit" class="edit btn btn-edit">Edit</button>
+							<button data-todo-id="{{_id}}" data-todo-action="edit" class="edit btn btn-edit">Edit</button>
 						</li>
 						<li>
-							<button data-todo-id="{{id}}" data-todo-action="delete" class="btn btn-delete">Delete</button>
+							<button data-todo-id="{{_id}}" data-todo-action="delete" class="btn btn-delete">Delete</button>
 						</li>
 					</ul>
 				</li>
@@ -54,10 +54,6 @@
 
 		<div>
 			<button id="theme-toggle" class="btn">Toggle Theme</button>
-		</div>
-
-		<div class="my-4">
-			<button id="add-mock-data" class="btn">Add Mock Data</button>
 		</div>
 
 		<div class="container">
@@ -104,9 +100,14 @@
 			<form id="todo-form" method="dialog">
 				<h2 id="dialog-heading">Create/Edit Todo</h2>
 
-				<div class="hidden">
+				<!-- <div class="hidden">
 					<label for="id">ID:</label>
 					<input id="id" name="id" type="number" hidden readonly>
+				</div> -->
+
+				<div>
+					<label for="id">ID:</label>
+					<input id="id" name="id" type="text" readonly>
 				</div>
 
 				<div class="flex flex-col my-4">
