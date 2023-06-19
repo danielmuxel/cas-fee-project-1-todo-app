@@ -11,15 +11,13 @@ Make sure you have the latest version of Node.js installed on your machine. If y
 ### Installation
 First, clone the project to your local machine. You can do this by running the following command in your terminal:
 ```
-git clone <repository_url>
+git clone https://github.com/danielmuxel/cas-fee-project-1-todo-app.git 
 ```
-Replace <repository_url> with the URL of this repository.
 
 Navigate to the root directory of the project, which should look something like this:
 ```
-cd <project_directory>
+cd cas-fee-project-1-todo-app
 ```
-Replace <project_directory> with the name of the directory that was created when you cloned the project.
 
 Once you're in the project's root directory, install the required npm packages using the following command:
 ```
