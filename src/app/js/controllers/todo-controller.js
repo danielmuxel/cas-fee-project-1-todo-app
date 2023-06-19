@@ -19,6 +19,7 @@ const todoFormElement = document.querySelector("#todo-form");
 const todoDialogCloseElement = document.querySelector(
   "#todo-dialog #close-dialog"
 );
+const todoDialogHeadingElement = document.querySelector("#dialog-heading");
 
 const todoSortActionsElement = document.querySelector("#todo-sort-actions");
 let sort = {
@@ -38,13 +39,11 @@ Handlebars.registerHelper("formatDate", (date) => {
   return `${day}.${month}.${year}`;
 });
 
-Handlebars.registerHelper('times', (n, block) => {
-  let accum = '';
-  for(let i = 0; i < n; ++i)
-      accum += block.fn(i);
+Handlebars.registerHelper("times", (n, block) => {
+  let accum = "";
+  for (let i = 0; i < n; ++i) accum += block.fn(i);
   return accum;
 });
-
 
 async function renderTodos() {
   // console.log("renderTodos", filter, sort);
@@ -83,6 +82,9 @@ const attachEventListeners = () => {
       // get the id from the data-todo-id attribute
       const id = event.target.dataset.todoId;
 
+      // Set the dialog heading
+      todoDialogHeadingElement.textContent = "Edit Todo";
+
       // get the todo item
       const todo = await getTodo(id);
 
@@ -104,7 +106,6 @@ const attachEventListeners = () => {
 
     // if the action is the toggle-finish checkbox
     if (event.target.dataset.todoAction === "toggle-finish") {
-
       // get the id from the data-todo-id attribute
       const id = event.target.dataset.todoId;
 
@@ -127,6 +128,9 @@ const attachEventListeners = () => {
     // Clear the form
     todoFormElement.reset();
 
+    // Set the dialog heading
+    todoDialogHeadingElement.textContent = "New Todo";
+
     // Open the dialog
     todoDialogElement.showModal();
   });
@@ -135,30 +139,30 @@ const attachEventListeners = () => {
   todoFormElement.addEventListener("submit", async (event) => {
     event.preventDefault(); // prevent the default form submit behavior, so it doesn't reload the page
 
-      const formData = new FormData(event.target);
-      const todo = Object.fromEntries(formData.entries());
+    const formData = new FormData(event.target);
+    const todo = Object.fromEntries(formData.entries());
 
-      // transform the .id prop to _id
-      if (todo.id) {
-        // eslint-disable-next-line no-underscore-dangle
-        todo._id = todo.id;
-        delete todo.id;
-      }
+    // transform the .id prop to _id
+    if (todo.id) {
+      // eslint-disable-next-line no-underscore-dangle
+      todo._id = todo.id;
+      delete todo.id;
+    }
 
-      if (todo.finished === "on") {
-        todo.finished = true;
-      } else {
-        todo.finished = false;
-      }
+    if (todo.finished === "on") {
+      todo.finished = true;
+    } else {
+      todo.finished = false;
+    }
 
-      // add or update todo
-      await addOrUpdateTodo(todo);
+    // add or update todo
+    await addOrUpdateTodo(todo);
 
-      // Close the dialog
-      todoDialogElement.close();
+    // Close the dialog
+    todoDialogElement.close();
 
-      // re-render the todo list
-      await renderTodos();
+    // re-render the todo list
+    await renderTodos();
   });
 
   // create the event listener for the todo dialog close button
