@@ -20,7 +20,7 @@
 		<ul id="todo-list">
 			{{#each todos}}
 				<li class="todo {{#if finished}}finished{{else}}pending{{/if}}">
-					<input data-todo-id="{{_id}}" data-todo-action="toggle-finish" type="checkbox" class="toggle" {{#if finished}}checked{{/if}}>
+					<input data-todo-id="{{_id}}" data-todo-action="toggle-finish" name="toggle-finish" type="checkbox" class="toggle" {{#if finished}}checked{{/if}}>
 
 					<div>
 						<h2>{{title}}</h2>

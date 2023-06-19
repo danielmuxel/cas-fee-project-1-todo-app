@@ -38,6 +38,7 @@ Handlebars.registerHelper("formatDate", (date) => {
 });
 
 async function renderTodos() {
+  // console.log("renderTodos", filter, sort);
   const todos = await getTodos(filter, sort);
 
   // Generate the HTML
@@ -94,6 +95,7 @@ const attachEventListeners = () => {
 
     // if the action is the toggle-finish checkbox
     if (event.target.dataset.todoAction === "toggle-finish") {
+
       // get the id from the data-todo-id attribute
       const id = event.target.dataset.todoId;
 
@@ -122,33 +124,32 @@ const attachEventListeners = () => {
 
   // create the event listener for the todo form submit
   todoFormElement.addEventListener("submit", async (event) => {
-
     event.preventDefault(); // prevent the default form submit behavior, so it doesn't reload the page
 
-    const formData = new FormData(event.target);
-    const todo = Object.fromEntries(formData.entries());
+      const formData = new FormData(event.target);
+      const todo = Object.fromEntries(formData.entries());
 
-    // transform the .id prop to _id
-    if (todo.id) {
-      // eslint-disable-next-line no-underscore-dangle
-      todo._id = todo.id;
-      delete todo.id;
-    }
+      // transform the .id prop to _id
+      if (todo.id) {
+        // eslint-disable-next-line no-underscore-dangle
+        todo._id = todo.id;
+        delete todo.id;
+      }
 
-    if (todo.finished === "on") {
-      todo.finished = true;
-    } else {
-      todo.finished = false;
-    }
+      if (todo.finished === "on") {
+        todo.finished = true;
+      } else {
+        todo.finished = false;
+      }
 
-    // add or update todo
-    await addOrUpdateTodo(todo);
+      // add or update todo
+      await addOrUpdateTodo(todo);
 
-    // Close the dialog
-    todoDialogElement.close();
+      // Close the dialog
+      todoDialogElement.close();
 
-    // re-render the todo list
-    await renderTodos();
+      // re-render the todo list
+      await renderTodos();
   });
 
   // create the event listener for the todo dialog close button
@@ -170,11 +171,21 @@ const attachEventListeners = () => {
     // if the sort key is the same as the previous one, then toggle the order
     if (sort[key] !== undefined) {
       sort[key] *= -1;
+      // toggle the up class on the button
+      event.target.classList.toggle("up");
     } else {
+      // remove the .up and .active classes from all the buttons
+      todoSortActionsElement.querySelectorAll(".btn").forEach((button) => {
+        button.classList.remove("up", "active");
+      });
+
       // reset the sort object
       sort = {};
       // set the sort key to 1
       sort[key] = 1;
+
+      // add the .active classes to the clicked button
+      event.target.classList.add("active");
     }
 
     // re-render the todo list
@@ -188,6 +199,14 @@ todoFilterActionsElement.addEventListener("click", async (event) => {
   if (!event.target.dataset.filterKey) {
     return;
   }
+
+  // reset the .active class on all the buttons
+  todoFilterActionsElement.querySelectorAll(".btn").forEach((button) => {
+    button.classList.remove("active");
+  });
+
+  // add the .active class to the clicked button
+  event.target.classList.add("active");
 
   // get the filter key from the data-filter-key attribute
   const key = event.target.dataset.filterKey;
@@ -219,6 +238,11 @@ todoFilterActionsElement.addEventListener("click", async (event) => {
 async function initializeTodoController() {
   // render the todo list
   await renderTodos();
+
+  // add the active class to the all filter button
+  todoFilterActionsElement
+    .querySelector("[data-filter-key='all']")
+    .classList.add("active");
 
   // attach event listeners to the buttons
   attachEventListeners();
