@@ -113,6 +113,10 @@ textarea {
   transition: box-shadow 0.2s ease-in-out;
 }
 
+body.dark input {
+  color-scheme: dark;
+}
+
 
 input[type="checkbox"] {
   padding: 1rem;
