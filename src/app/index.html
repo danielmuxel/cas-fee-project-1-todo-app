@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 
 <head>
 	<meta charset="UTF-8">
@@ -17,6 +17,7 @@
 	<script src="./js/app.js" type="module"></script>
 
 	<script id="todo-template" type="text/x-handlebars-template">
+		{{#if todos.length}}
 		<ul id="todo-list">
 			{{#each todos}}
 				<li class="todo {{#if finished}}finished{{else}}pending{{/if}}">
@@ -30,8 +31,19 @@
 						<p>
 							{{description}}
 						</p>
-						<p>
-							{{importance}}
+						
+					</div>
+
+					<div>
+						<p class="flex">
+							<!-- loop through the number of importance and create the lightning bolts according to the number -->
+							{{#times importance}}
+								<i class="icon">
+									<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+										<path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+									</svg>
+								</i>
+							{{/times}}
 						</p>
 					</div>
 
@@ -46,6 +58,12 @@
 				</li>
 			{{/each}}
 		</ul>
+		{{else}}
+			<div class="empty">
+				<p>You have no todos yet.</p>
+				<p>Create one by clicking the "New Todo" button.</p>
+		</div>
+		{{/if}}
 	</script>
 </head>
 
@@ -61,7 +79,11 @@
 		</div>
 
 		<div class="my-4">
-			<button id="new-todo-button" class="btn">New Todo</button>
+			<button id="new-todo-button" class="btn">New Todo <i class="icon"><svg xmlns="http://www.w3.org/2000/svg"
+						fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor">
+						<path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+					</svg>
+				</i></button>
 		</div>
 
 		<!-- inside the todo-container the todos are getting rendered by the todo-template -->

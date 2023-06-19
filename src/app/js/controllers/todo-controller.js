@@ -13,6 +13,7 @@ const todoTemplateSource = todoTemplateElement.innerHTML;
 const todoCompiledTemplate = Handlebars.compile(todoTemplateSource);
 
 const newTodoButtonElement = document.querySelector("#new-todo-button");
+
 const todoDialogElement = document.querySelector("#todo-dialog");
 const todoFormElement = document.querySelector("#todo-form");
 const todoDialogCloseElement = document.querySelector(
@@ -36,6 +37,14 @@ Handlebars.registerHelper("formatDate", (date) => {
   const year = dateObject.getFullYear();
   return `${day}.${month}.${year}`;
 });
+
+Handlebars.registerHelper('times', (n, block) => {
+  let accum = '';
+  for(let i = 0; i < n; ++i)
+      accum += block.fn(i);
+  return accum;
+});
+
 
 async function renderTodos() {
   // console.log("renderTodos", filter, sort);

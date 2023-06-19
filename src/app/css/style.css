@@ -101,7 +101,8 @@ textarea {
 }
 
 .btn {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
   background-color: var(--primary);
@@ -131,6 +132,12 @@ textarea {
 
 .btn-sort.up::after {
   transform: rotate(180deg);
+}
+
+.icon {
+  height: 1rem;
+  width: 1rem;
+  margin-left: 0.5rem;
 }
 
 .todo {
@@ -191,3 +198,23 @@ textarea {
   margin-left: 0.5rem;
 }
 
+.empty {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 24rem;
+}
+
+input[type="checkbox"] {
+  padding: 1rem;
+}
+
+
+/* 
+inputs focus so that the outline is visible even when the input is not focused
+*/
+input:focus,
+textarea:focus {
+  box-shadow: 0 0 0 2px var(--primary);
+}
