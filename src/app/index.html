@@ -67,16 +67,16 @@
 		<!-- inside the todo-container the todos are getting rendered by the todo-template -->
 		<ul id="todo-sort-actions" class="flex flex-wrap my-4 space-x-2">
 			<li>
-				<button data-sort-key="title" class="btn">Sort by Title</button>
+				<button data-sort-key="title" class="btn btn-sort">Sort by Title</button>
 			</li>
 			<li>
-				<button data-sort-key="dueDate" class="btn">Sort by Due Date</button>
+				<button data-sort-key="dueDate" class="btn btn-sort">Sort by Due Date</button>
 			</li>
 			<li>
-				<button data-sort-key="importance" class="btn">Sort by Importance</button>
+				<button data-sort-key="importance" class="btn btn-sort">Sort by Importance</button>
 			</li>
 			<li>
-				<button data-sort-key="finished" class="btn">Sort by Finished</button>
+				<button data-sort-key="finished" class="btn btn-sort">Sort by Finished</button>
 			</li>
 		</ul>
 
@@ -100,14 +100,9 @@
 			<form id="todo-form" method="dialog">
 				<h2 id="dialog-heading">Create/Edit Todo</h2>
 
-				<!-- <div class="hidden">
+				<div class="hidden">
 					<label for="id">ID:</label>
-					<input id="id" name="id" type="number" hidden readonly>
-				</div> -->
-
-				<div>
-					<label for="id">ID:</label>
-					<input id="id" name="id" type="text" readonly>
+					<input id="id" name="id" type="text" hidden readonly>
 				</div>
 
 				<div class="flex flex-col my-4">
