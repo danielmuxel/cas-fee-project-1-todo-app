@@ -252,11 +252,6 @@ async function initializeTodoController() {
   // render the todo list
   await renderTodos();
 
-  // add the active class to the all filter button
-  todoFilterActionsElement
-    .querySelector("[data-filter-key='all']")
-    .classList.add("active");
-
   // attach event listeners to the buttons
   attachEventListeners();
 }

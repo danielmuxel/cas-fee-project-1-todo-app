@@ -70,49 +70,50 @@
 <body>
 	<main>
 
-		<div class="grid my-4 gap-2">
+		<div class="grid my-4 gap-2 justify-end">
 			<button id="theme-toggle" class="btn">Toggle Theme</button>
 		</div>
 
 		<div class="container">
 			<h1>Todo - App</h1>
+
+			<div class="grid my-8 gap-2">
+				<button id="new-todo-button" class="btn">New Todo <i class="icon"><svg xmlns="http://www.w3.org/2000/svg"
+							fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor">
+							<path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+						</svg>
+					</i></button>
+			</div>
+
+			<!-- inside the todo-container the todos are getting rendered by the todo-template -->
+			<ul id="todo-sort-actions" class="grid my-8 gap-2">
+				<li>
+					<button data-sort-key="title" class="btn w-full btn-sort">Sort by Title</button>
+				</li>
+				<li>
+					<button data-sort-key="dueDate" class="btn w-full btn-sort">Sort by Due Date</button>
+				</li>
+				<li>
+					<button data-sort-key="importance" class="btn w-full btn-sort">Sort by Importance</button>
+				</li>
+				<li>
+					<button data-sort-key="finished" class="btn w-full btn-sort">Sort by Finished</button>
+				</li>
+			</ul>
+
+			<ul id="todo-filter-actions" class="grid my-8 gap-2">
+				<li>
+					<button data-filter-key="all" class="btn w-full active">Show All</button>
+				</li>
+				<li>
+					<button data-filter-key="finished" class="btn w-full">Show Finished</button>
+				</li>
+				<li>
+					<button data-filter-key="pending" class="btn w-full">Show Pending</button>
+				</li>
+			</ul>
 		</div>
 
-		<div class="grid my-8 gap-2">
-			<button id="new-todo-button" class="btn">New Todo <i class="icon"><svg xmlns="http://www.w3.org/2000/svg"
-						fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor">
-						<path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-					</svg>
-				</i></button>
-		</div>
-
-		<!-- inside the todo-container the todos are getting rendered by the todo-template -->
-		<ul id="todo-sort-actions" class="grid my-8 gap-2">
-			<li>
-				<button data-sort-key="title" class="btn w-full btn-sort">Sort by Title</button>
-			</li>
-			<li>
-				<button data-sort-key="dueDate" class="btn w-full btn-sort">Sort by Due Date</button>
-			</li>
-			<li>
-				<button data-sort-key="importance" class="btn w-full btn-sort">Sort by Importance</button>
-			</li>
-			<li>
-				<button data-sort-key="finished" class="btn w-full btn-sort">Sort by Finished</button>
-			</li>
-		</ul>
-
-		<ul id="todo-filter-actions" class="grid my-8 gap-2">
-			<li>
-				<button data-filter-key="all" class="btn w-full">Show All</button>
-			</li>
-			<li>
-				<button data-filter-key="finished" class="btn w-full">Show Finished</button>
-			</li>
-			<li>
-				<button data-filter-key="pending" class="btn w-full">Show Pending</button>
-			</li>
-		</ul>
 
 		<section class="todo-container">
 		</section>
@@ -137,11 +138,11 @@
 				</div>
 				<div class="flex flex-col my-4">
 					<label for="dueDate">Due Date:</label>
-					<input id="dueDate" name="dueDate" type="date">
+					<input id="dueDate" name="dueDate" type="date" required>
 				</div>
 				<div class="flex flex-col my-4">
 					<label for="importance">Importance (1-5):</label>
-					<input id="importance" name="importance" type="number" min="1" max="5">
+					<input id="importance" name="importance" type="number" min="1" max="5" required>
 				</div>
 				<div class="flex my-4">
 					<input id="finished" name="finished" type="checkbox">

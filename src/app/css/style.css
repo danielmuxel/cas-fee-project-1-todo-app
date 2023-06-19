@@ -259,6 +259,10 @@ textarea:focus {
   }
 }
 
+.justify-end {
+  justify-content: end;
+}
+
 .empty {
   display: flex;
   flex-direction: column;
