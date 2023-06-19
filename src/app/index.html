@@ -70,7 +70,7 @@
 <body>
 	<main>
 
-		<div>
+		<div class="grid my-4 gap-2">
 			<button id="theme-toggle" class="btn">Toggle Theme</button>
 		</div>
 
@@ -78,7 +78,7 @@
 			<h1>Todo - App</h1>
 		</div>
 
-		<div class="my-4">
+		<div class="grid my-8 gap-2">
 			<button id="new-todo-button" class="btn">New Todo <i class="icon"><svg xmlns="http://www.w3.org/2000/svg"
 						fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor">
 						<path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -87,30 +87,30 @@
 		</div>
 
 		<!-- inside the todo-container the todos are getting rendered by the todo-template -->
-		<ul id="todo-sort-actions" class="flex flex-wrap my-4 space-x-2">
+		<ul id="todo-sort-actions" class="grid my-8 gap-2">
 			<li>
-				<button data-sort-key="title" class="btn btn-sort">Sort by Title</button>
+				<button data-sort-key="title" class="btn w-full btn-sort">Sort by Title</button>
 			</li>
 			<li>
-				<button data-sort-key="dueDate" class="btn btn-sort">Sort by Due Date</button>
+				<button data-sort-key="dueDate" class="btn w-full btn-sort">Sort by Due Date</button>
 			</li>
 			<li>
-				<button data-sort-key="importance" class="btn btn-sort">Sort by Importance</button>
+				<button data-sort-key="importance" class="btn w-full btn-sort">Sort by Importance</button>
 			</li>
 			<li>
-				<button data-sort-key="finished" class="btn btn-sort">Sort by Finished</button>
+				<button data-sort-key="finished" class="btn w-full btn-sort">Sort by Finished</button>
 			</li>
 		</ul>
 
-		<ul id="todo-filter-actions" class="flex flex-wrap my-4 space-x-2">
+		<ul id="todo-filter-actions" class="grid my-8 gap-2">
 			<li>
-				<button data-filter-key="all" class="btn">Show All</button>
+				<button data-filter-key="all" class="btn w-full">Show All</button>
 			</li>
 			<li>
-				<button data-filter-key="finished" class="btn">Show Finished</button>
+				<button data-filter-key="finished" class="btn w-full">Show Finished</button>
 			</li>
 			<li>
-				<button data-filter-key="pending" class="btn">Show Pending</button>
+				<button data-filter-key="pending" class="btn w-full">Show Pending</button>
 			</li>
 		</ul>
 

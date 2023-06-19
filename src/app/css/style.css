@@ -20,11 +20,12 @@
   --primary-button-active: #317BD6;
   --text: #030712;
   --background: #fff;
+  --dialog-background: #fff;
+  --input-background: #fff;
 }
 
 body {
   margin: 0;
-  padding: 1rem;
   color: var(--text);
   background-color: var(--background);
   transition: background-color 0.2s ease-in-out;
@@ -36,6 +37,18 @@ body.dark {
   --primary-button-active: #AE5AF9;
   --text: #e5e7eb;
   --background: #111827;
+  --dialog-background: #1F2937;
+  --input-background: #374151;
+}
+
+dialog {
+  background-color: var(--dialog-background);
+  color: var(--text);
+}
+
+main {
+  min-height: 100vh;
+  padding: 1rem;
 }
 
 * {
@@ -61,6 +74,12 @@ button {
   border: none;
   background-color: transparent;
   cursor: pointer;
+  color: inherit;
+  font-weight: bold
+}
+
+button:focus {
+  outline: var(--primary) auto 1px;
 }
 
 h2 {
@@ -84,6 +103,8 @@ dialog {
 input,
 textarea {
   border: 1px solid var(--text);
+  background-color: var(--input-background);
+  color: var(--text);
   border-radius: 0.5rem;
   padding: 0.5rem 1rem;
   font-size: 1rem;
@@ -91,6 +112,20 @@ textarea {
   outline: none;
   transition: box-shadow 0.2s ease-in-out;
 }
+
+
+input[type="checkbox"] {
+  padding: 1rem;
+}
+
+/* 
+inputs focus so that the outline is visible even when the input is not focused
+*/
+input:focus,
+textarea:focus {
+  box-shadow: 0 0 0 2px var(--primary);
+}
+
 
 /* components */
 
@@ -102,8 +137,9 @@ textarea {
 
 .btn {
   display: inline-flex;
+  justify-content: space-between;
   align-items: center;
-  padding: 0.5rem 1rem;
+  padding: 0.75rem 1rem;
   border-radius: 0.5rem;
   background-color: var(--primary);
   color: #fff;
@@ -190,6 +226,11 @@ textarea {
   margin-bottom: 1rem;
 }
 
+.my-8 {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
 .hidden {
   display: none;
 }
@@ -198,23 +239,26 @@ textarea {
   margin-left: 0.5rem;
 }
 
+.w-full {
+  width: 100%;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(max-content, 12rem)); 
+  grid-gap: 1rem;
+}
+
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .empty {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 24rem;
-}
-
-input[type="checkbox"] {
-  padding: 1rem;
-}
-
-
-/* 
-inputs focus so that the outline is visible even when the input is not focused
-*/
-input:focus,
-textarea:focus {
-  box-shadow: 0 0 0 2px var(--primary);
 }
