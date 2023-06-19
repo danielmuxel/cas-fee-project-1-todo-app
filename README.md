@@ -5,10 +5,10 @@ The Todo App is a simple, web-based application built with HTML, CSS, and JavaSc
 ## Getting Started
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-### Prerequisites
+### Prerequisites
 Make sure you have the latest version of Node.js installed on your machine. If you don't have Node.js installed, you can download it from https://nodejs.org/.
 
-### Installation
+### Installation
 First, clone the project to your local machine. You can do this by running the following command in your terminal:
 ```
 git clone <repository_url>
@@ -31,7 +31,7 @@ npm run start
 ```
 The application should now be running on your local machine!
 
-## Scripts
+## Scripts
 Below are the scripts available to run in this project:
 
 `npm test`: Runs the test suite for this application using the test.js file.
